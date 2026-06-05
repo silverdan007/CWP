@@ -40,7 +40,7 @@ def borrow_book():
             line = line.split("\t") #" \t "
             book = line[0]
             temp.append(book)
-            print(book, temp)
+            # print(book, temp)
 
             if name_of_book.strip() == book.strip():
                 # print("hit")
@@ -56,6 +56,7 @@ def borrow_book():
       
         index = 0
         for line in lines:
+            # print(f"{line} in {lines}")
             line = line.split("\t")
             name_of_book = name_of_book.strip()
             target = line[0].strip()
@@ -79,7 +80,7 @@ def return_book():
     with open("borrowed.txt", "r+") as file:
         upload = file.readlines()
         line_count = 0
-        print(upload)
+        # print(upload)
         for line in upload:
             if line == " ":
                 continue
@@ -95,7 +96,7 @@ def return_book():
                     a_file.write(f"{line[1]} \t {line[2]} \n")
                     target_line = line_count - 1
                     print(f"{line[0]} returned {line[1]} succesfully")
-            print(lender)
+            # print(lender)
         # update borrowed list
         line_count = 0
 
@@ -104,17 +105,17 @@ def return_book():
                 continue
             else:
                 line_T = line.split(" \t ")
-                print(line_T, "pre error", upload)
+                # print(line_T, "pre error", upload)
                 if line_T == " ":
-                    print("empty")
+                    # print("empty")
                     continue
                 elif line_T[1] == book_return:
-                    print(f"line{line_count}")
+                    # print(f"line{line_count}")
                     upload.pop(line_count)
                 line_count += 1
     with open("borrowed.txt", "w") as filer:
         filer.writelines(upload)
-        print(upload, "end")
+        # print(upload, "end")
         # for line in upload:
         #     print(line, line_count, target_line)
         #     if line_count == target_line:
@@ -123,8 +124,8 @@ def return_book():
         #         file.write(line)
 
 def search_library():
-    print("God Abeg!!!")
-    search = input("\t enter title of book")
+    # print("God Abeg!!!")
+    search = input("\t enter title of book").strip().lower()
     with open("available.txt", "r") as file:
         entries = file.readlines()
         for entry in entries:
@@ -136,6 +137,7 @@ def search_library():
                 entry = entry.split(" \t ")
                 if entry[0] == search:
                     print(entry, "found")
+                
                     #to be completed
 
 def display_availabilty(area):
@@ -170,5 +172,47 @@ def display_availabilty(area):
 # borrow_book()
 # return_book()
 # search_library()
-display_availabilty("borrowed")
+# display_availabilty("borrowed")
 # print(book)
+
+print("Library Management System....")
+features = ["Add Book", 
+            "View Books",
+            "Borrow Book",
+            "Return Book",
+            "Search Library",
+            "Display Availability"
+
+            ]
+
+
+flag = True
+while flag:
+    for feature in range(len(features)):
+        print(f"Type {feature + 1} to {features[feature]}")
+    choice = input("").lower()
+    if choice == "1":
+        add_book()
+    elif choice == "2":
+        view_books()
+    elif choice == "3":
+        borrow_book()
+    elif choice == "4":
+        return_book()
+    elif choice == "5":
+        search_library()
+    elif choice == "6":
+        print("type 1 to search available books \n type 2 search borrowed books")
+        area = input("")
+        if area == "1":
+            display_availabilty("available")
+        elif area == "2":
+            display_availabilty("borrowed")
+        else:
+            continue
+    elif choice == "exit":
+        flag = False
+    else:
+        print("invalid input")
+        
+    
